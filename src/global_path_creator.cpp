@@ -84,6 +84,8 @@ void GlobalPathCreator::make_global_path()
 
                 visualization_msgs::Marker id_mk;
                 id_mk.id = id;
+                id_mk.ns = id;
+                id_mk.text = id;
                 id_mk.action = visualization_msgs::Marker::ADD;
                 id_mk.type = visualization_msgs::Marker::TEXT_VIEW_FACING;
                 id_mk.lifetime = ros::Duration();

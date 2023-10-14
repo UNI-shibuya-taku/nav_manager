@@ -96,7 +96,7 @@ void GlobalPathCreator::make_global_path()
                 id_mk.lifetime = ros::Duration();
                 id_mk.pose.position.x = waypoints_[j].x;
                 id_mk.pose.position.y = waypoints_[j].y;
-                id_mk.scale.z = 0.8;
+                id_mk.scale.z = 0.5;
                 id_mk.pose.orientation.w = 1;
                 id_mk.color.r = 1.0;
                 id_mk.color.g = 1.0;
@@ -113,9 +113,9 @@ void GlobalPathCreator::make_global_path()
                 waypoint_mk.lifetime = ros::Duration();
                 waypoint_mk.pose.position.x = waypoints_[j].x;
                 waypoint_mk.pose.position.y = waypoints_[j].y;
-                waypoint_mk.scale.x = 1.5;
-                waypoint_mk.scale.y = 1.5;
-                waypoint_mk.scale.z = 1.5;
+                waypoint_mk.scale.x = 0.3;
+                waypoint_mk.scale.y = 0.3;
+                waypoint_mk.scale.z = 0.3;
                 waypoint_mk.pose.orientation.w = 1;
                 waypoint_mk.color.r = 1.0;
                 waypoint_mk.color.g = 0.0;

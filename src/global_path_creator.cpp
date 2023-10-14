@@ -127,8 +127,7 @@ void GlobalPathCreator::make_global_path()
     global_path.header.frame_id = "map";
     // id_markers.header.frame_id = "map";
     // waypoint_markers.header.frame_id = "map";
-
-    std::cout << "make global path" << std::endl;
+    std::cout << "marker array_size: " << id_markers.markers.size() << waypoint_markers.markers.size() << std::endl;
     while(1){
         pub_path.publish(global_path);
         pub_id.publish(id_markers);

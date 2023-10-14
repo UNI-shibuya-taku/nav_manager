@@ -81,7 +81,7 @@ void GlobalPathCreator::make_global_path()
     }
     global_path.header.frame_id = "map";
     std::cout << "make global path" << std::endl;
-    while(){
+    while(1){
         pub_path.publish(global_path);
     }
 }

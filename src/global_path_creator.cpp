@@ -70,10 +70,10 @@ void GlobalPathCreator::make_global_path()
     for(int i = 0; i < routes_.size(); i++){
         double id = routes_[i]["id"];
         for(int j = 0; j < waypoints_.size(); j++){
-            if(waypoints_[j]["id"] == id){
+            if(waypoints_[j].id == id){
                 geometry_msgs::PoseStamped tmp_path_point;
-                tmp_path_point.pose.position.x = waypoints[j]["x"];
-                tmp_path_point.pose.position.y = waypoints[j]["y"];
+                tmp_path_point.pose.position.x = waypoints[j].x;
+                tmp_path_point.pose.position.y = waypoints[j].y;
                 tmp_path_point.header.frame_id = "map"; 
                 global_path.poses.push_back(tmp_path_point);
             }

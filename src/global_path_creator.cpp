@@ -67,7 +67,7 @@ void GlobalPathCreator::make_global_path()
     // routes_[0]
     // waypoints_[0]
     for(int i = 0; i < routes_.size(); i++){
-        int id = routes_[i]["id"];
+        int id = routes_[i];
         for(int j = 0; j < waypoints_.size(); j++){
             if(waypoints_[j].id == id){
                 geometry_msgs::PoseStamped tmp_path_point;

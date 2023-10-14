@@ -35,6 +35,7 @@ void GlobalPathCreator::load_waypoints()
         }
         std::cout << "clear ROS_WARN" << std::endl;
         if(waypoints_list_[i]["id"].getType() == XmlRpc::XmlRpcValue::TypeInt && waypoints_list_[i]["x"].getType() == XmlRpc::XmlRpcValue::TypeInt && waypoints_list_[i]["y"].getType() == XmlRpc::XmlRpcValue::TypeInt){
+            std::cout << "the waypoint: " << waypoints_list_[i] << std::endl;
             int id = static_cast<int>(waypoints_list_[i]["id"]);
             int x = static_cast<double>(waypoints_list_[i]["x"]);
             int y = static_cast<double>(waypoints_list_[i]["y"]);

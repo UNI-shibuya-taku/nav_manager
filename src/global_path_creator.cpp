@@ -81,13 +81,15 @@ void GlobalPathCreator::make_global_path()
     }
     global_path.header.frame_id = "map";
     std::cout << "make global path" << std::endl;
-    pub_path.publish(global_path);
+    while(ros::ok()){
+        pub_path.publish(global_path);
+    }
 }
 
 void GlobalPathCreator::process()
 {
     while(ros::ok()){
-        pub_path.publish(global_path);
+        // pub_path.publish(global_path);
         // ros::spinOnce();
     }
 }

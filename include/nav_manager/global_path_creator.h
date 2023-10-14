@@ -3,6 +3,7 @@
 
 // 受け取った順番に線を引く
 #include "ros/ros.h"
+#include "iostream"
 #include "nav_msgs/OccupancyGrid.h"
 #include "geometry_msgs/Pose2D.h"
 #include "nav_msgs/Path.h"

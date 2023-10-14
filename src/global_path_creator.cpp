@@ -71,6 +71,7 @@ void GlobalPathCreator::make_global_path()
 
     // routes_[0]
     // waypoints_[0]
+    int count_id = 0;
     for(int i = 0; i < routes_.size(); i++){
         int id = routes_[i];
         for(int j = 0; j < waypoints_.size(); j++){
@@ -83,9 +84,13 @@ void GlobalPathCreator::make_global_path()
                 std::cout << "route_id: " << id << std::endl;
 
                 visualization_msgs::Marker id_mk;
-                id_mk.id = id;
-                id_mk.ns = id;
-                id_mk.text = id;
+                id_mk.header.frame_id = "map";
+                id_mk.header.stamp = ros::Time::now();
+                id_mk.id = count_id;
+                id_mk.ns = "basic_shapes";
+                ostringstream str;
+                str << id;
+                id_mk.text = str.str();
                 id_mk.action = visualization_msgs::Marker::ADD;
                 id_mk.type = visualization_msgs::Marker::TEXT_VIEW_FACING;
                 id_mk.lifetime = ros::Duration();
@@ -97,8 +102,7 @@ void GlobalPathCreator::make_global_path()
                 id_mk.color.g = 1.0;
                 id_mk.color.b = 1.0;
                 id_mk.color.a = 0.7;
-                id_mk.header.frame_id = "map";
-                id_markers.markers.append(id_mk);
+                id_markers.markers.push_back(id_mk);
                 visualization_msgs::Marker waypoint_mk;
                 waypoint_mk.id = id;
                 waypoint_mk.action = visualization_msgs::Marker::ADD;
@@ -113,7 +117,9 @@ void GlobalPathCreator::make_global_path()
                 waypoint_mk.color.b = 0.0;
                 waypoint_mk.color.a = 0.7;
                 waypoint_mk.header.frame_id = "map";
-                waypoint_markers.markers.append(waypoint_mk);
+                waypoint_markers.markers.push_back(waypoint_mk);
+
+                count_id ++;
             }
         } 
     }

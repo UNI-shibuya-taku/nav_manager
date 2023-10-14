@@ -105,6 +105,8 @@ void GlobalPathCreator::make_global_path()
                 id_markers.markers.push_back(id_mk);
                 
                 visualization_msgs::Marker waypoint_mk;
+                waypoint_mk.header.frame_id = "map";
+                waypoint_mk.header.stamp = ros::Time::now();
                 waypoint_mk.id = id;
                 waypoint_mk.action = visualization_msgs::Marker::ADD;
                 waypoint_mk.type = visualization_msgs::Marker::CUBE;
@@ -117,7 +119,6 @@ void GlobalPathCreator::make_global_path()
                 waypoint_mk.color.g = 0.0;
                 waypoint_mk.color.b = 0.0;
                 waypoint_mk.color.a = 0.7;
-                waypoint_mk.header.frame_id = "map";
                 waypoint_markers.markers.push_back(waypoint_mk);
 
                 count_id ++;
@@ -127,7 +128,7 @@ void GlobalPathCreator::make_global_path()
     global_path.header.frame_id = "map";
     // id_markers.header.frame_id = "map";
     // waypoint_markers.header.frame_id = "map";
-    std::cout << "marker array_size: " << id_markers.markers.size() << waypoint_markers.markers.size() << std::endl;
+    std::cout << "marker array_size: " << id_markers.markers.size() << " " << waypoint_markers.markers.size() << std::endl;
     while(1){
         pub_path.publish(global_path);
         pub_id.publish(id_markers);

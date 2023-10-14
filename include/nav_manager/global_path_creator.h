@@ -9,6 +9,7 @@
 #include "geometry_msgs/PointStamped.h"
 #include <std_msgs/Int32MultiArray.h>
 #include "nav_manager/waypoints.h"
+#include <visualization_msgs/Marker.h>
 // #include <amsl_navigation_msgs/Node.h>
 // #include <amsl_navigation_msgs/Edge.h>
 // #include <amsl_navigation_msgs/NodeEdgeMap.h>
@@ -40,11 +41,8 @@ private:
     ros::NodeHandle private_nh_;
   
     ros::Publisher pub_path;
-    // ros::Publisher pub_open_grid;
-    // ros::Subscriber sub_map;
-    // ros::Subscriber sub_path;
-    // ros::Subscriber node_edge_map_sub;
-    // ros::Subscriber check_point_sub;
+    ros::Publisher pub_id;
+    ros::Publisher pub_waypoint;
 
     nav_msgs::Path global_path;
     nav_msgs::Path waypoint_path;

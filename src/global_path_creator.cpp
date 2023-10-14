@@ -29,7 +29,6 @@ void GlobalPathCreator::load_waypoints()
     std::cout << "finished ROS_ASSERT" << std::endl;
     std::cout << "waypoints_size: " << waypoints_list_.size() << std::endl;
     for(int i = 0; i < (int)waypoints_list_.size(); i++){
-        std::cout << "i: " << i << std::endl;
         if(!waypoints_list_[i]["id"].valid() || !waypoints_list_[i]["x"].valid() || !waypoints_list_[i]["y"].valid()){
             ROS_WARN("waypoints list is valid");
             return;
@@ -76,17 +75,20 @@ void GlobalPathCreator::make_global_path()
                 tmp_path_point.pose.position.y = waypoints_[j].y;
                 tmp_path_point.header.frame_id = "map"; 
                 global_path.poses.push_back(tmp_path_point);
+                std::cout << tmp_path_point << std::endl;
             }
         } 
     }
     global_path.header.frame_id = "map";
+    std::cout << "make global path" << std::endl;
+    pub_path.publish(global_path);
 }
 
 void GlobalPathCreator::process()
 {
     while(ros::ok()){
-        ros::spinOnce();
         pub_path.publish(global_path);
+        // ros::spinOnce();
     }
 }
 int main (int argc, char **argv)

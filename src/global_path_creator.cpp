@@ -94,6 +94,7 @@ void GlobalPathCreator::make_global_path()
                 id_mk.color.g = 1.0;
                 id_mk.color.b = 1.0;
                 id_mk.color.a = 0.7;
+                id_mk.header.frame_id = "map";
                 id_markers.markers.push_back(id_mk);
                 visualization_msgs::Marker waypoint_mk;
                 waypoint_mk.id = id;
@@ -107,13 +108,14 @@ void GlobalPathCreator::make_global_path()
                 waypoint_mk.color.g = 0.0;
                 waypoint_mk.color.b = 0.0;
                 waypoint_mk.color.a = 0.7;
+                waypoint_mk.header.frame_id = "map";
                 waypoint_markers.markers.push_back(waypoint_mk);
             }
         } 
     }
     global_path.header.frame_id = "map";
-    id_markers.header.frame_id = "map";
-    waypoint_markers.header.frame_id = "map";
+    // id_markers.header.frame_id = "map";
+    // waypoint_markers.header.frame_id = "map";
 
     std::cout << "make global path" << std::endl;
     while(1){

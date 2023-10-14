@@ -89,6 +89,7 @@ void GlobalPathCreator::make_global_path()
                 id_mk.lifetime = ros::Duration();
                 id_mk.pose.position.x = waypoints_[j].x;
                 id_mk.pose.position.y = waypoints_[j].y;
+                id_mk.scale.z = 0.8;
                 id_mk.pose.orientation.w = 1;
                 id_mk.color.r = 1.0;
                 id_mk.color.g = 1.0;
@@ -103,6 +104,7 @@ void GlobalPathCreator::make_global_path()
                 waypoint_mk.lifetime = ros::Duration();
                 waypoint_mk.pose.position.x = waypoints_[j].x;
                 waypoint_mk.pose.position.y = waypoints_[j].y;
+                waypoint_mk.scale.z = 0.8;
                 waypoint_mk.pose.orientation.w = 1;
                 waypoint_mk.color.r = 1.0;
                 waypoint_mk.color.g = 0.0;
@@ -118,10 +120,10 @@ void GlobalPathCreator::make_global_path()
     // waypoint_markers.header.frame_id = "map";
 
     std::cout << "make global path" << std::endl;
+    pub_id.publish(id_markers);
+    pub_waypoint.publish(waypoint_markers);
     while(1){
         pub_path.publish(global_path);
-        pub_id.publish(id_markers);
-        pub_waypoint.publish(waypoint_markers);
     }
 }
 

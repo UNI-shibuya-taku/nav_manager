@@ -12,16 +12,20 @@ GlobalPathCreator::GlobalPathCreator() :
 
 	// ndt_pose_sub_ = nh_.subscribe(ndt_pose_topic_name_,10,&EKF::ndt_pose_callback,this);
     pub_path = n.advertise<nav_msgs::Path>("/global_path/path_path",1);
+    std::cout << "set global_path_creator!!!!" << std::endl;
+
     load_waypoints();
     load_route();
 }
 void GlobalPathCreator::load_waypoints()
 {
+    std::cout << "load_waypoints" << std::endl;
     if(!private_nh_.getParam("waypoints_list",waypoints_list_)){
         ROS_WARN("Cloud not load waypoints list");
         return;
     }
     ROS_ASSERT(waypoints_list_.getType() == XmlRpc::XmlRpcValue::TypeArray);
+    std::cout << "finished ROS_ASSERT" << std::endl;
     for(int i = 0; i < (int)waypoints_list_.size(); i++){
         if(!waypoints_list_[i]["id"].valid() || !waypoints_list_[i]["x"].valid() || !waypoints_list_[i]["y"].valid()){
             ROS_WARN("waypoints list is valid");
@@ -39,11 +43,13 @@ void GlobalPathCreator::load_waypoints()
 }
 void GlobalPathCreator::load_route()
 {
+    std::cout << "load_route" << std::endl;
     if(!private_nh_.getParam("route_list",route_list_)){
         ROS_WARN("Cloud not load route list");
         return;
     }
     ROS_ASSERT(route_list_.getType() == XmlRpc::XmlRpcValue::TypeArray);
+    std::cout << "finished ROS_ASSERT" << std::endl;
     for(int i = 0; i < (int)route_list_.size(); i++){
         if(!route_list_[i]["id"].valid()){
             ROS_WARN("route list is valid");

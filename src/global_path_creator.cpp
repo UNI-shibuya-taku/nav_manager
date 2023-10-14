@@ -88,7 +88,7 @@ void GlobalPathCreator::make_global_path()
                 id_mk.header.stamp = ros::Time::now();
                 id_mk.id = count_id;
                 id_mk.ns = "basic_shapes";
-                ostringstream str;
+                std::ostringstream str;
                 str << id;
                 id_mk.text = str.str();
                 id_mk.action = visualization_msgs::Marker::ADD;

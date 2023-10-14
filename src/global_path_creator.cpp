@@ -103,6 +103,7 @@ void GlobalPathCreator::make_global_path()
                 id_mk.color.b = 1.0;
                 id_mk.color.a = 0.7;
                 id_markers.markers.push_back(id_mk);
+                
                 visualization_msgs::Marker waypoint_mk;
                 waypoint_mk.id = id;
                 waypoint_mk.action = visualization_msgs::Marker::ADD;
@@ -128,10 +129,10 @@ void GlobalPathCreator::make_global_path()
     // waypoint_markers.header.frame_id = "map";
 
     std::cout << "make global path" << std::endl;
-    pub_id.publish(id_markers);
-    pub_waypoint.publish(waypoint_markers);
     while(1){
         pub_path.publish(global_path);
+        pub_id.publish(id_markers);
+        pub_waypoint.publish(waypoint_markers);
     }
 }
 

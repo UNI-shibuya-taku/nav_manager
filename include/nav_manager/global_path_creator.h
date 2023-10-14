@@ -25,6 +25,7 @@ private:
     // void node_edge_map_callback(const amsl_navigation_msgs::NodeEdgeMapConstPtr&);
     void load_waypoints();
     void load_route();
+    void make_global_path();
 
     bool replan_flag;
     bool node_edge_flag;

@@ -16,6 +16,7 @@ GlobalPathCreator::GlobalPathCreator() :
 
     load_waypoints();
     load_route();
+    make_global_path();
 }
 void GlobalPathCreator::load_waypoints()
 {
@@ -79,14 +80,13 @@ void GlobalPathCreator::make_global_path()
         } 
     }
     global_path.header.frame_id = "map";
-    for(int i = 0; i < 1000000; i++) // for visualize
-        pub_path.publish(global_path);
 }
 
 void GlobalPathCreator::process()
 {
     while(ros::ok()){
         ros::spinOnce();
+        pub_path.publish(global_path);
     }
 }
 int main (int argc, char **argv)

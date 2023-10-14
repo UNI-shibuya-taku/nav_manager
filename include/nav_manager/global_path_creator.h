@@ -35,7 +35,7 @@ private:
     XmlRpc::XmlRpcValue waypoints_list_;
     XmlRpc::XmlRpcValue route_list_;
 
-    // ros::NodeHandle n;
+    ros::NodeHandle n;
     ros::NodeHandle private_nh_;
   
     ros::Publisher pub_path;

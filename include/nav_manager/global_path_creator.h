@@ -10,6 +10,7 @@
 #include <std_msgs/Int32MultiArray.h>
 #include "nav_manager/waypoints.h"
 #include <visualization_msgs/Marker.h>
+#include <visualization_msgs/MarkerArray.h>
 // #include <amsl_navigation_msgs/Node.h>
 // #include <amsl_navigation_msgs/Edge.h>
 // #include <amsl_navigation_msgs/NodeEdgeMap.h>

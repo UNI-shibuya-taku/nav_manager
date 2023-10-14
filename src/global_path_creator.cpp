@@ -87,8 +87,8 @@ void GlobalPathCreator::make_global_path()
                 id_mk.action = visualization_msgs::Marker::ADD;
                 id_mk.type = visualization_msgs::Marker::TEXT_VIEW_FACING;
                 id_mk.lifetime = ros::Duration();
-                id_mk.pose.postion.x = waypoints_[j].x;
-                id_mk.pose.postion.y = waypoints_[j].y;
+                id_mk.pose.position.x = waypoints_[j].x;
+                id_mk.pose.position.y = waypoints_[j].y;
                 id_mk.pose.orientation.w = 1;
                 id_mk.color.r = 1.0;
                 id_mk.color.g = 1.0;
@@ -100,8 +100,8 @@ void GlobalPathCreator::make_global_path()
                 waypoint_mk.action = visualization_msgs::Marker::ADD;
                 waypoint_mk.type = visualization_msgs::Marker::CUBE;
                 waypoint_mk.lifetime = ros::Duration();
-                waypoint_mk.pose.postion.x = waypoints_[j].x;
-                waypoint_mk.pose.postion.y = waypoints_[j].y;
+                waypoint_mk.pose.position.x = waypoints_[j].x;
+                waypoint_mk.pose.position.y = waypoints_[j].y;
                 waypoint_mk.pose.orientation.w = 1;
                 waypoint_mk.color.r = 1.0;
                 waypoint_mk.color.g = 0.0;

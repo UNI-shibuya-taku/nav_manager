@@ -140,6 +140,7 @@ include_directories(
 # add_executable(${PROJECT_NAME}_node src/nav_manager_node.cpp)
 # add_executable(dijkstra_node src/dijkstra_node.cpp)
 add_executable(global_path_creator src/global_path_creator.cpp)
+add_executable(next_waypoint_creator src/next_waypoint_creator.cpp)
 # add_executable(local_goal_creator src/local_goal_creator.cpp)
 
 ## Rename C++ executable without prefix
@@ -159,6 +160,7 @@ add_executable(global_path_creator src/global_path_creator.cpp)
 # )
 # target_link_libraries(dijkstra_node ${catkin_LIBRARIES})
 target_link_libraries(global_path_creator ${catkin_LIBRARIES})
+target_link_libraries(next_waypoint_creator ${catkin_LIBRARIES})
 # target_link_libraries(local_goal_creator ${catkin_LIBRARIES})
 
 #############

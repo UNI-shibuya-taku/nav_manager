@@ -2,7 +2,8 @@
 #include "nav_manager/waypoints.h"
 
 GlobalPathCreator::GlobalPathCreator() :
-	private_nh_("~"),
+	private_nh_("~")
+    // ,
 	// has_received_odom_(false), has_received_imu_(false), has_received_ndt_pose_(false),
 	// is_first_(true), is_respawn_(false)
 {

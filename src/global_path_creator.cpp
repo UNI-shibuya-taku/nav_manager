@@ -65,9 +65,9 @@ void GlobalPathCreator::load_route()
 void GlobalPathCreator::make_global_path()
 {
     // routes_[0]
-    // waypoints[0]
+    // waypoints_[0]
     for(int i = 0; i < routes_.size(); i++){
-        double id = routes_[i]["id"];
+        int id = routes_[i]["id"];
         for(int j = 0; j < waypoints_.size(); j++){
             if(waypoints_[j].id == id){
                 geometry_msgs::PoseStamped tmp_path_point;
@@ -75,13 +75,13 @@ void GlobalPathCreator::make_global_path()
                 tmp_path_point.pose.position.y = waypoints_[j].y;
                 tmp_path_point.header.frame_id = "map"; 
                 global_path.poses.push_back(tmp_path_point);
-                std::cout << tmp_path_point << std::endl;
+                std::cout << "route_id: " << id << std::endl;
             }
         } 
     }
     global_path.header.frame_id = "map";
     std::cout << "make global path" << std::endl;
-    while(ros::ok()){
+    while(){
         pub_path.publish(global_path);
     }
 }

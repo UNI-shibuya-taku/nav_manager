@@ -26,11 +26,14 @@ void GlobalPathCreator::load_waypoints()
     }
     ROS_ASSERT(waypoints_list_.getType() == XmlRpc::XmlRpcValue::TypeArray);
     std::cout << "finished ROS_ASSERT" << std::endl;
+    std::cout << "waypoints_size: " << waypoints_list_.size() << std::endl;
     for(int i = 0; i < (int)waypoints_list_.size(); i++){
+        std::cout << "i: " << i << std::endl;
         if(!waypoints_list_[i]["id"].valid() || !waypoints_list_[i]["x"].valid() || !waypoints_list_[i]["y"].valid()){
             ROS_WARN("waypoints list is valid");
             return;
         }
+        std::cout << "clear ROS_WARN" << std::endl;
         if(waypoints_list_[i]["id"].getType() == XmlRpc::XmlRpcValue::TypeInt && waypoints_list_[i]["x"].getType() == XmlRpc::XmlRpcValue::TypeInt && waypoints_list_[i]["y"].getType() == XmlRpc::XmlRpcValue::TypeInt){
             int id = static_cast<int>(waypoints_list_[i]["id"]);
             double x = static_cast<double>(waypoints_list_[i]["x"]);

@@ -1,6 +1,6 @@
 <launch>
     <!-- <node pkg="dijkstra_global_planner" type="global_path_viz.py" name="global_path_viz" ns="global_planner"/> -->
-    <node pkg="nav_manager" type="global_path_creator" name="global_path_creator">
+    <node pkg="nav_manager" type="global_path_creator" name="global_path_creator" output="screen">
         <rosparam command="load" file="$(find nav_manager)/config/waypoints_list.yaml" />
         <rosparam command="load" file="$(find nav_manager)/config/route_list.yaml" />
 	</node>

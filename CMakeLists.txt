@@ -12,7 +12,10 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   std_msgs
+  nav_msgs
+  sensor_msgs
   visualization_msgs
+  pcl_ros 
 )
 
 ## System dependencies are found with CMake's conventions
@@ -120,13 +123,15 @@ catkin_package(
 include_directories(
   include
   ${catkin_INCLUDE_DIRS}
+  ${PCL_INCLUDE_DIRS}
 )
-
+find_package(PCL 1.8 REQUIRED)
 ## Declare a C++ library
 # add_library(${PROJECT_NAME}
 #   src/${PROJECT_NAME}/nav_manager.cpp
 # )
-
+link_directories(${PCL_LIBRARY_DIRS})
+add_definitions(${PCL_DEFINITIONS})
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
 ## either from message generation or dynamic reconfigure
@@ -157,7 +162,10 @@ add_executable(simple_localmap_creator src/simple_localmap_creator.cpp)
 # )
 target_link_libraries(global_path_creator ${catkin_LIBRARIES})
 target_link_libraries(next_waypoint_creator ${catkin_LIBRARIES})
-target_link_libraries(simple_localmap_creator ${catkin_LIBRARIES})
+target_link_libraries(simple_localmap_creator 
+                      ${catkin_LIBRARIES}
+                      ${PCL_LIBRARIES}
+)
 
 #############
 ## Install ##

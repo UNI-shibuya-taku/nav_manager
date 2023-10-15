@@ -11,7 +11,7 @@ GlobalPathCreator::GlobalPathCreator() :
 	// private_nh_.param("MOTION_NOISE_OO",MOTION_NOISE_OO_,{1e-3});
 
 	// ndt_pose_sub_ = nh_.subscribe(ndt_pose_topic_name_,10,&EKF::ndt_pose_callback,this);
-    pub_path = n.advertise<nav_msgs::Path>("/global_path/path_path",1);
+    pub_path = n.advertise<nav_msgs::Path>("/global_path/path",1);
     pub_id = n.advertise<visualization_msgs::MarkerArray>("/global_path/marker/id",1);
     pub_waypoint = n.advertise<visualization_msgs::MarkerArray>("/global_path/marker/waypoint",1);
     std::cout << "set global_path_creator!!!!" << std::endl;

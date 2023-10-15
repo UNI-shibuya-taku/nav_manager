@@ -4,9 +4,6 @@
 #include "nav_msgs/Path.h"
 #include "geometry_msgs/PoseStamped.h"
 #include <std_msgs/Int32MultiArray.h>
-#include "amsl_navigation_msgs/Node.h"
-#include "amsl_navigation_msgs/Edge.h"
-#include "amsl_navigation_msgs/NodeEdgeMap.h"
 class NextWaypointCreator
 {
 public:

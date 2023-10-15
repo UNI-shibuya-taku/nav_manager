@@ -4,6 +4,10 @@
 #include "nav_msgs/Path.h"
 #include "geometry_msgs/PoseStamped.h"
 #include <std_msgs/Int32MultiArray.h>
+#include <geometry_msgs/TransformStamped.h>
+#include <tf2_ros/static_transform_broadcaster.h>
+#include <tf2_ros/transform_broadcaster.h>
+#include <tf2/LinearMath/Quaternion.h>
 class NextWaypointCreator
 {
 public:
@@ -33,6 +37,7 @@ private:
     geometry_msgs::PoseStamped current_pose;
     geometry_msgs::PoseStamped next_waypoint;
     std_msgs::Int32MultiArray global_path_num;
+    tf2_ros::TransformBroadcaster dynamic_br_;
     // amsl_navigation_msgs::Edge estimated_edge;
     unsigned int goal_number;
     bool have_recieved_path = false;

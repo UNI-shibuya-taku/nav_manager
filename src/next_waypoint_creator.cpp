@@ -11,7 +11,7 @@ NextWaypointCreator::NextWaypointCreator():private_nh("~")
     // sub_path = nh.subscribe("/global_path/path",10,&NextWaypointCreator::path_callback,this);
 
     //publisher
-    pub_local_goal = nh.advertise<geometry_msgs::PoseStamped>("/next_waypoint",1);
+    pub_next_waypoint = nh.advertise<geometry_msgs::PoseStamped>("/next_waypoint",1);
     // pub_estimated_edge = nh.advertise<amsl_navigation_msgs::Edge>("/estimated_pose/edge", 1);
 }
 
@@ -24,10 +24,10 @@ NextWaypointCreator::NextWaypointCreator():private_nh("~")
 void NextWaypointCreator::global_path_callback(const nav_msgs::Path::ConstPtr& msg)
 {
     std::cout<<"global_path callback "<<std::endl;
-    global_path=*msg;
+    global_path =* msg;
     std::cout<<"global_path size: " << global_path.poses.size() << std::endl;
-    goal_number = 0;
-    local_goal = global_path.poses[goal_number]; // goal_number番目の位置
+    goal_number = 0; // 最初は0番目
+    next_waypoint = global_path.poses[goal_number]; // goal_number番目の位置
     have_recieved_path = true;
 }
 void NextWaypointCreator::current_pose_callback(const geometry_msgs::PoseStamped::ConstPtr& msg)
@@ -39,17 +39,16 @@ void NextWaypointCreator::current_pose_callback(const geometry_msgs::PoseStamped
 }
 void NextWaypointCreator::select_next_goal()
 {
-    double measure_distance = sqrt(pow(local_goal.pose.position.x-current_pose.pose.position.x,2)+pow(local_goal.pose.position.y-current_pose.pose.position.y,2)); // 自分の位置と次の通過ポイントの距離
+    double measure_distance = sqrt(pow(next_waypoint.pose.position.x-current_pose.pose.position.x,2)+pow(next_waypoint.pose.position.y-current_pose.pose.position.y,2)); // 自分の位置と次の通過ポイントの距離
     std::cout<<"distance: "<< measure_distance<<std::endl;
     if(measure_distance < border_distance) goal_number += 1;
-    if(global_path.poses.size() > goal_number) local_goal = global_path.poses[goal_number];
-    else local_goal = global_path.poses[global_path.poses.size()-1];
-    if(goal_number == 0) goal_number ++;
+
+    if(global_path.poses.size() > goal_number) next_waypoint = global_path.poses[goal_number];
+    else next_waypoint = global_path.poses[global_path.poses.size()-1];
+
+    if(goal_number == 0) goal_number ++; // スタート地点ならすぐ更新
     std::cout<<"goal_number: "<< goal_number <<std::endl;
-    estimated_edge.node0_id = global_path_num.data[goal_number-1]; // 最後に通過したnode
-    estimated_edge.node1_id = global_path_num.data[goal_number];
-    std::cout<<"estimated_edge.node0: "<< estimated_edge.node0_id << " node1: " << estimated_edge.node1_id <<std::endl;
-    pub_estimated_edge.publish(estimated_edge);
+
  }
 
 void NextWaypointCreator::process()
@@ -57,12 +56,12 @@ void NextWaypointCreator::process()
     ros::Rate loop_rate(hz);
     while(ros::ok())
     {
-        if(have_recieved_path && have_recieved_multi_array )
+        if(have_recieved_path)
         {
             select_next_goal();
-            local_goal.header.frame_id = "map";
-            std::cout<<"local_goal :"<<local_goal.pose.position.x<<","<<local_goal.pose.position.y<<std::endl;
-            pub_local_goal.publish(local_goal);
+            next_waypoint.header.frame_id = "map";
+            std::cout<<"next_waypoint :"<<next_waypoint.pose.position.x<<","<<next_waypoint.pose.position.y<<std::endl;
+            pub_next_waypoint.publish(next_waypoint);
         }
         ros::spinOnce();
         loop_rate.sleep();
@@ -71,8 +70,8 @@ void NextWaypointCreator::process()
 
 int main (int argc,char **argv)
 {
-    ros::init(argc, argv, "local_goal_creator");
-    NextWaypointCreator local_goal_creator;
-    local_goal_creator.process();
+    ros::init(argc, argv, "next_waypoint_creator");
+    NextWaypointCreator next_waypoint_creator;
+    next_waypoint_creator.process();
     return 0;
 }

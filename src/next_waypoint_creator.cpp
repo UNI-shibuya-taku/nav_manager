@@ -44,12 +44,13 @@ void NextWaypointCreator::current_pose_callback(const geometry_msgs::PoseStamped
     transformStamped.transform.translation.x = current_pose.pose.position.x;
     transformStamped.transform.translation.y = current_pose.pose.position.y;
     transformStamped.transform.translation.z = 0.0;
+
     // tf2::Quaternion q;
     // q.setRPY(0, 0, 0.0); // YAW
-    transformStamped.transform.rotation.x = current_pose.pose.orientation.x();
-    transformStamped.transform.rotation.y = current_pose.pose.orientation.y();
-    transformStamped.transform.rotation.z = current_pose.pose.orientation.z();
-    transformStamped.transform.rotation.w = current_pose.pose.orientation.w();
+    transformStamped.transform.rotation.x = current_pose.pose.orientation.x;
+    transformStamped.transform.rotation.y = current_pose.pose.orientation.y;
+    transformStamped.transform.rotation.z = current_pose.pose.orientation.z;
+    transformStamped.transform.rotation.w = current_pose.pose.orientation.w;
     dynamic_br_.sendTransform(transformStamped);
 }
 void NextWaypointCreator::select_next_goal()

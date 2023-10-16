@@ -2,9 +2,6 @@
     <node pkg="nav_manager" type="simple_localmap_creator" name="simple_localmap_creator" output="screen">
 	</node>
 
-    <node pkg="nav_manager" type="next_waypoint_creator" name="next_waypoint_creator" output="screen">
-	</node>
-
     <!-- tf -->
 	 <!-- <node name="map_to_lidar" pkg="tf2_ros" type="static_transform_publisher" args="0 0 0 0 0 0 0 /map /velodyne_lower"/> -->
 

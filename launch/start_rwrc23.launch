@@ -6,7 +6,7 @@
     <!-- global_path_planner -->
     <include file="$(find nav_manager)/launch/global_path_creator.launch"/>
     <!-- next_waypoint_creator -->
-    <include file="$(find nav_manager)/launch/next_waypoint_creator.launch"/>
+    <!-- <include file="$(find nav_manager)/launch/next_waypoint_creator.launch"/> -->
     <!-- localizer -->
     <include file="$(find ekf_localizer)/launch/ekf_localizer.launch"/>
 

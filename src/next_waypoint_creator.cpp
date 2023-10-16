@@ -37,21 +37,21 @@ void NextWaypointCreator::current_pose_callback(const geometry_msgs::PoseStamped
     // if(!have_recieved_pose) 
     have_recieved_pose = true;
 
-    geometry_msgs::TransformStamped transformStamped;
-    transformStamped.header.stamp = ros::Time::now();
-    transformStamped.header.frame_id = "map";
-    transformStamped.child_frame_id = "base_link";
-    transformStamped.transform.translation.x = current_pose.pose.position.x;
-    transformStamped.transform.translation.y = current_pose.pose.position.y;
-    transformStamped.transform.translation.z = 0.0;
+    // geometry_msgs::TransformStamped transformStamped;
+    // transformStamped.header.stamp = ros::Time::now();
+    // transformStamped.header.frame_id = "map";
+    // transformStamped.child_frame_id = "base_link";
+    // transformStamped.transform.translation.x = current_pose.pose.position.x;
+    // transformStamped.transform.translation.y = current_pose.pose.position.y;
+    // transformStamped.transform.translation.z = 0.0;
 
-    // tf2::Quaternion q;
-    // q.setRPY(0, 0, 0.0); // YAW
-    transformStamped.transform.rotation.x = current_pose.pose.orientation.x;
-    transformStamped.transform.rotation.y = current_pose.pose.orientation.y;
-    transformStamped.transform.rotation.z = current_pose.pose.orientation.z;
-    transformStamped.transform.rotation.w = current_pose.pose.orientation.w;
-    dynamic_br_.sendTransform(transformStamped);
+    // // tf2::Quaternion q;
+    // // q.setRPY(0, 0, 0.0); // YAW
+    // transformStamped.transform.rotation.x = current_pose.pose.orientation.x;
+    // transformStamped.transform.rotation.y = current_pose.pose.orientation.y;
+    // transformStamped.transform.rotation.z = current_pose.pose.orientation.z;
+    // transformStamped.transform.rotation.w = current_pose.pose.orientation.w;
+    // dynamic_br_.sendTransform(transformStamped);
 }
 void NextWaypointCreator::select_next_goal()
 {

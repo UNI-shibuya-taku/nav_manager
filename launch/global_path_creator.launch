@@ -4,9 +4,6 @@
         <rosparam command="load" file="$(find nav_manager)/config/route_list.yaml" />
 	</node>
 
-    <!-- <node pkg="nav_manager" type="next_waypoint_creator" name="next_waypoint_creator" output="screen">
-	</node> -->
-
     <!-- rviz -->
-    <node pkg="rviz" type="rviz11" name="rviz11" args="-d $(find nav_manager)/config/nav_manager.rviz" />
+    <!-- <node pkg="rviz" type="rviz11" name="rviz11" args="-d $(find nav_manager)/config/nav_manager.rviz" /> -->
 </launch>

@@ -36,6 +36,7 @@
         <param name="CONTROL_DELAY" value="$(arg control_delay)"/>
         <param name="TURN_DIRECTION_THRESHOLD" value="$(arg turn_direction_threshold)"/>
         <param name="ENABLE_SHARP_TRAJECTORY" value="$(arg enable_sharp_trajectory)"/>
+
         <remap from="/local_map" to="/local_map/expand"/>
         <remap from="/local_goal" to="/next_waypoint"/>
         <remap from="/cmd_vel" to="/local_path/cmd_vel"/>

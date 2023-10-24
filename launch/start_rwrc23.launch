@@ -1,5 +1,6 @@
 <launch>
 
+    <include file="$(find velodyne_pointcloud)/launch/VLP16_points.launch"/>
     <!-- height_map -->
     <include file="$(find velodyne_height_map)/launch/heightmap_nodelet.launch"/>
 	<!-- localmap_creator -->

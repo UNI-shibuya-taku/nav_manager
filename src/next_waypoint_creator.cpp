@@ -6,21 +6,37 @@ NextWaypointCreator::NextWaypointCreator():private_nh("~")
     private_nh.param("hz",hz,{10});
     private_nh.param("border_distance",border_distance,{2.0});
     //subscriber
-    sub_global_path = nh.subscribe("/global_path/path",10,&NextWaypointCreator::global_path_callback,this);
-    sub_current_pose = nh.subscribe("/ekf_pose",10,&NextWaypointCreator::current_pose_callback,this);
-    // sub_path = nh.subscribe("/global_path/path",10,&NextWaypointCreator::path_callback,this);
+    sub_global_path = nh.subscribe("/global_path/path",10,&NextWaypointCreator::global_path_callback, this);
+    sub_current_pose = nh.subscribe("/ekf_pose",10,&NextWaypointCreator::current_pose_callback, this);
+    // pub_task = n.advertise<std_msgs::Bool>("/bool/white_line",1);
 
     //publisher
     pub_next_waypoint = nh.advertise<geometry_msgs::PoseStamped>("/next_waypoint",1);
-    // pub_estimated_edge = nh.advertise<amsl_navigation_msgs::Edge>("/estimated_pose/edge", 1);
+
+    // load_task();
 }
 
-// void NextWaypointCreator::path_callback(const std_msgs::Int32MultiArray::ConstPtr& msg_path)
-// {
-//     std::cout<<"path callback "<<std::endl;
-//     global_path_num = *msg_path;
-//     have_recieved_multi_array = true;
+// void NextWaypointCreator::load_task(){
+//     if(!private_nh_.getParam("waypoints_list", task_list_)){
+//         ROS_WARN("Can not load waypoints list");
+//         return;
+//     }
+//     ROS_ASSERT(task_list_.getType() == XmlRpc::XmlRpcValue::TypeArray);
+//     for(int i = 0; i < (int)waypoints_list_.size(); i++){
+//         if(!waypoints_list_[i]["id"].valid() || !waypoints_list_[i]["x"].valid() || !waypoints_list_[i]["y"].valid()){
+//             ROS_WARN("waypoints list is valid");
+//             return;
+//         }
+//         if(waypoints_list_[i]["id"].getType() == XmlRpc::XmlRpcValue::TypeInt && waypoints_list_[i]["x"].getType() == XmlRpc::XmlRpcValue::TypeDouble && waypoints_list_[i]["y"].getType() == XmlRpc::XmlRpcValue::TypeDouble){
+//             int id = static_cast<int>(waypoints_list_[i]["id"]);
+//             double x = static_cast<double>(waypoints_list_[i]["x"]);
+//             double y = static_cast<double>(waypoints_list_[i]["y"]);
+//             Waypoint waypoint(id, x, y);
+//             waypoints_.push_back(waypoint);
+//         }
+//     }
 // }
+
 void NextWaypointCreator::global_path_callback(const nav_msgs::Path::ConstPtr& msg)
 {
     std::cout<<"global_path callback "<<std::endl;
@@ -36,22 +52,6 @@ void NextWaypointCreator::current_pose_callback(const geometry_msgs::PoseStamped
     current_pose = *msg;
     // if(!have_recieved_pose) 
     have_recieved_pose = true;
-
-    // geometry_msgs::TransformStamped transformStamped;
-    // transformStamped.header.stamp = ros::Time::now();
-    // transformStamped.header.frame_id = "map";
-    // transformStamped.child_frame_id = "base_link";
-    // transformStamped.transform.translation.x = current_pose.pose.position.x;
-    // transformStamped.transform.translation.y = current_pose.pose.position.y;
-    // transformStamped.transform.translation.z = 0.0;
-
-    // // tf2::Quaternion q;
-    // // q.setRPY(0, 0, 0.0); // YAW
-    // transformStamped.transform.rotation.x = current_pose.pose.orientation.x;
-    // transformStamped.transform.rotation.y = current_pose.pose.orientation.y;
-    // transformStamped.transform.rotation.z = current_pose.pose.orientation.z;
-    // transformStamped.transform.rotation.w = current_pose.pose.orientation.w;
-    // dynamic_br_.sendTransform(transformStamped);
 }
 void NextWaypointCreator::select_next_goal()
 {

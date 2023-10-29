@@ -66,17 +66,17 @@ void NextWaypointCreator::select_next_goal()
     if(global_path.poses.size() > goal_number) next_waypoint = global_path.poses[goal_number];
     else next_waypoint = global_path.poses[global_path.poses.size()-1];
 
-    if(goal_number == 0) goal_number ++; // スタート地点ならすぐ更新
-    std::cout<<"goal_number: "<< goal_number <<std::endl;
+    // if(goal_number == 0) goal_number ++; // スタート地点ならすぐ更新
+    // std::cout<<"goal_number: "<< goal_number <<std::endl;
 
-    int last_pos_id = (int)route_ids.markers[goal_number-1].text;
-    int next_pos_id = (int)route_ids.markers[goal_number].text;
-    for(int i = 0; i < route_ids.size(); i++){
-        if(task_interval[i]["trigger"] == "white_line" && last_pos_id == task_interval[i]["last_id"] && next_pos_id == task_interval[i]["next_id"]){
-            std_msgs::Bool is_white_line = true; // bool publish!!!
-        }
-    }
-    std::cout<<"last_pos_id: "<< last_pos_id << " next_pos_id: " << next_pos_id << std::endl;
+    // int last_pos_id = (int)route_ids.markers[goal_number-1].text;
+    // int next_pos_id = (int)route_ids.markers[goal_number].text;
+    // for(int i = 0; i < route_ids.size(); i++){
+    //     if(task_interval[i]["trigger"] == "white_line" && last_pos_id == task_interval[i]["last_id"] && next_pos_id == task_interval[i]["next_id"]){
+    //         std_msgs::Bool is_white_line = true; // bool publish!!!
+    //     }
+    // }
+    // std::cout<<"last_pos_id: "<< last_pos_id << " next_pos_id: " << next_pos_id << std::endl;
 }
 
 void NextWaypointCreator::process()

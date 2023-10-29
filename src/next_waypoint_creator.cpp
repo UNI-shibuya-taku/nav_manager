@@ -9,7 +9,7 @@ NextWaypointCreator::NextWaypointCreator():private_nh("~")
     sub_global_path = nh.subscribe("/global_path/path",10,&NextWaypointCreator::global_path_callback, this);
     sub_current_pose = nh.subscribe("/ekf_pose",10,&NextWaypointCreator::current_pose_callback, this);
     sub_route_id = nh.subscribe("/global_path/marker/id",10,&NextWaypointCreator::route_id_callback, this);
-    // pub_task = n.advertise<std_msgs::Bool>("/bool/white_line",1);
+    pub_whiteline_bool = n.advertise<std_msgs::Bool>("/bool/white_line",1);
 
     //publisher
     pub_next_waypoint = nh.advertise<geometry_msgs::PoseStamped>("/next_waypoint",1);
@@ -23,7 +23,6 @@ void NextWaypointCreator::route_id_callback(const visualization_msgs::MarkerArra
     if(have_recieved_route_id == false)
         route_ids = *msg; // route順にidが格納
     have_recieved_route_id = true;
-    std::cout << "route_ids: " << route_ids << std::endl;
 }
 
 void NextWaypointCreator::load_task(){
@@ -69,7 +68,16 @@ void NextWaypointCreator::select_next_goal()
 
     if(goal_number == 0) goal_number ++; // スタート地点ならすぐ更新
     std::cout<<"goal_number: "<< goal_number <<std::endl;
- }
+
+    int last_pos_id = (int)route_ids[goal_number-1];
+    int next_pos_id = (int)route_ids[goal_number];
+    for(int i = 0; i < route_ids.size(); i++){
+        if(task_interval[i].trigger == "white_line" && last_pos_id == task_interval[i].last_id && next_pos_id == task_interval[i].next_id){
+            std_msgs::Bool is_white_line = true; // bool publish!!!
+        }
+    }
+    std::cout<<"last_id: "<< last_id << " next_id: " << next_id << std::endl;
+}
 
 void NextWaypointCreator::process()
 {

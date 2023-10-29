@@ -48,7 +48,7 @@ private:
     ros::Subscriber sub_route_id;
 
     ros::Publisher pub_next_waypoint;
-    ros::Publisher pub_task;
+    ros::Publisher pub_whiteline_bool;
 
     nav_msgs::Path global_path;
     geometry_msgs::PoseStamped current_pose;

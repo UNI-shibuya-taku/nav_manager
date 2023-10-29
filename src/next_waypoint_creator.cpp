@@ -69,8 +69,8 @@ void NextWaypointCreator::select_next_goal()
     if(goal_number == 0) goal_number ++; // スタート地点ならすぐ更新
     std::cout<<"goal_number: "<< goal_number <<std::endl;
 
-    int last_pos_id = (int)route_ids.markers[goal_number-1];
-    int next_pos_id = (int)route_ids.markers[goal_number];
+    int last_pos_id = (int)route_ids.markers[goal_number-1].text;
+    int next_pos_id = (int)route_ids.markers[goal_number].text;
     for(int i = 0; i < route_ids.size(); i++){
         if(task_interval[i]["trigger"] == "white_line" && last_pos_id == task_interval[i]["last_id"] && next_pos_id == task_interval[i]["next_id"]){
             std_msgs::Bool is_white_line = true; // bool publish!!!

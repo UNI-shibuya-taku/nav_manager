@@ -8,39 +8,41 @@ NextWaypointCreator::NextWaypointCreator():private_nh("~")
     //subscriber
     sub_global_path = nh.subscribe("/global_path/path",10,&NextWaypointCreator::global_path_callback, this);
     sub_current_pose = nh.subscribe("/ekf_pose",10,&NextWaypointCreator::current_pose_callback, this);
+    sub_route_id = nh.subscribe("/global_path/marker/id",10,&NextWaypointCreator::route_id_callback, this);
     // pub_task = n.advertise<std_msgs::Bool>("/bool/white_line",1);
 
     //publisher
     pub_next_waypoint = nh.advertise<geometry_msgs::PoseStamped>("/next_waypoint",1);
 
-    // load_task();
+    load_task();
+}
+void NextWaypointCreator::route_id_callback(const visualization_msgs::MarkerArray::ConstPtr& msg)
+{
+    if(have_recieved_route_id == false)
+        route_ids = *msg; // route順にidが格納
+    have_recieved_route_id = true;
 }
 
-// void NextWaypointCreator::load_task(){
-//     if(!private_nh_.getParam("waypoints_list", task_list_)){
-//         ROS_WARN("Can not load waypoints list");
-//         return;
-//     }
-//     ROS_ASSERT(task_list_.getType() == XmlRpc::XmlRpcValue::TypeArray);
-//     for(int i = 0; i < (int)waypoints_list_.size(); i++){
-//         if(!waypoints_list_[i]["id"].valid() || !waypoints_list_[i]["x"].valid() || !waypoints_list_[i]["y"].valid()){
-//             ROS_WARN("waypoints list is valid");
-//             return;
-//         }
-//         if(waypoints_list_[i]["id"].getType() == XmlRpc::XmlRpcValue::TypeInt && waypoints_list_[i]["x"].getType() == XmlRpc::XmlRpcValue::TypeDouble && waypoints_list_[i]["y"].getType() == XmlRpc::XmlRpcValue::TypeDouble){
-//             int id = static_cast<int>(waypoints_list_[i]["id"]);
-//             double x = static_cast<double>(waypoints_list_[i]["x"]);
-//             double y = static_cast<double>(waypoints_list_[i]["y"]);
-//             Waypoint waypoint(id, x, y);
-//             waypoints_.push_back(waypoint);
-//         }
-//     }
-// }
+void NextWaypointCreator::load_task(){
+    if(!private_nh_.getParam("task", task_list_)){
+        ROS_WARN("Can not load waypoints list");
+        return;
+    }
+    ROS_ASSERT(task_list_.getType() == XmlRpc::XmlRpcValue::TypeArray);
+    for(int i = 0; i < (int)task_list_.size(); i++){
+        if(task_list_[i]["last_id"].getType() == XmlRpc::XmlRpcValue::TypeInt && task_list_[i]["next_id"].getType() == XmlRpc::XmlRpcValue::TypeInt){
+            int last_id = static_cast<int>(task_list_[i]["last_id"]);
+            int next_id = static_cast<int>(task_list_[i]["next_id"]);
+            Interval tmp_interval(last_id, next_id);
+            task_interval.push_back(tmp_interval);
+        }
+    }
+}
 
 void NextWaypointCreator::global_path_callback(const nav_msgs::Path::ConstPtr& msg)
 {
-    std::cout<<"global_path callback "<<std::endl;
-    global_path =* msg;
+    std::cout << "global_path callback "<< std::endl;
+    global_path = *msg;
     std::cout<<"global_path size: " << global_path.poses.size() << std::endl;
     goal_number = 0; // 最初は0番目
     next_waypoint = global_path.poses[goal_number]; // goal_number番目の位置
@@ -56,7 +58,7 @@ void NextWaypointCreator::current_pose_callback(const geometry_msgs::PoseStamped
 void NextWaypointCreator::select_next_goal()
 {
     double measure_distance = sqrt(pow(next_waypoint.pose.position.x-current_pose.pose.position.x,2)+pow(next_waypoint.pose.position.y-current_pose.pose.position.y,2)); // 自分の位置と次の通過ポイントの距離
-    std::cout<<"distance: "<< measure_distance<<std::endl;
+    std::cout<<"distance: "<< measure_distance << std::endl;
     if(measure_distance < border_distance) goal_number += 1;
 
     if(global_path.poses.size() > goal_number) next_waypoint = global_path.poses[goal_number];
@@ -64,7 +66,6 @@ void NextWaypointCreator::select_next_goal()
 
     if(goal_number == 0) goal_number ++; // スタート地点ならすぐ更新
     std::cout<<"goal_number: "<< goal_number <<std::endl;
-
  }
 
 void NextWaypointCreator::process()

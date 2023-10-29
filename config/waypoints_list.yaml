@@ -3,7 +3,6 @@ waypoints_list:
     - id: 0
       x: 20.00
       y: 20.00
-      task: white_line
 
     - id: 1
       x: 21.40
@@ -12,7 +11,6 @@ waypoints_list:
     - id: 2
       x: 21.40
       y: 23.36
-      task: white_line
 
     - id: 3
       x: 20.00
@@ -21,7 +19,6 @@ waypoints_list:
     - id: 4
       x: 18.60
       y: 23.36
-      task: white_line
 
     - id: 5
       x: 18.60
@@ -30,7 +27,6 @@ waypoints_list:
     - id: 6
       x: 18.60
       y: 16.60
-      task: white_line
 
     - id: 7
       x: 20.00

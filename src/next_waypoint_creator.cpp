@@ -16,11 +16,14 @@ NextWaypointCreator::NextWaypointCreator():private_nh("~")
 
     load_task();
 }
+
 void NextWaypointCreator::route_id_callback(const visualization_msgs::MarkerArray::ConstPtr& msg)
 {
+    std::cout << "route_id_callback"<< std::endl;
     if(have_recieved_route_id == false)
         route_ids = *msg; // route順にidが格納
     have_recieved_route_id = true;
+    std::cout << "route_ids: " << route_ids << std::endl;
 }
 
 void NextWaypointCreator::load_task(){
@@ -89,6 +92,7 @@ int main (int argc,char **argv)
 {
     ros::init(argc, argv, "next_waypoint_creator");
     NextWaypointCreator next_waypoint_creator;
+    std::cout << "next_waypoint_creator"<< std::endl;
     next_waypoint_creator.process();
     return 0;
 }

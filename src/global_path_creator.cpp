@@ -79,10 +79,9 @@ void GlobalPathCreator::make_global_path()
                 id_mk.header.stamp = ros::Time::now();
                 id_mk.id = count_id;
                 id_mk.ns = "basic_shapes";
-                // std::ostringstream str;
-                // str << id;
-                // id_mk.text = str.str();
-                id_mk.text = id;
+                std::ostringstream str;
+                str << id;
+                id_mk.text = str.str();
                 id_mk.action = visualization_msgs::Marker::ADD;
                 id_mk.type = visualization_msgs::Marker::TEXT_VIEW_FACING;
                 id_mk.lifetime = ros::Duration();

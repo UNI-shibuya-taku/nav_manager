@@ -24,7 +24,7 @@ void NextWaypointCreator::route_id_callback(const visualization_msgs::MarkerArra
 }
 
 void NextWaypointCreator::load_task(){
-    if(!private_nh_.getParam("task", task_list_)){
+    if(!private_nh.getParam("task", task_list_)){
         ROS_WARN("Can not load waypoints list");
         return;
     }

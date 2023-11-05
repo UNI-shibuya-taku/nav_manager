@@ -44,10 +44,12 @@ void NextWaypointCreator::load_task(){
 void NextWaypointCreator::global_path_callback(const nav_msgs::Path::ConstPtr& msg)
 {
     std::cout << "global_path callback "<< std::endl;
-    global_path = *msg;
-    std::cout<<"global_path size: " << global_path.poses.size() << std::endl;
-    goal_number = 0; // 最初は0番目
-    next_waypoint = global_path.poses[goal_number]; // goal_number番目の位置
+    if(have_recieved_path == false){
+        global_path = *msg;
+        std::cout<<"global_path size: " << global_path.poses.size() << std::endl;
+        goal_number = 0; // 最初は0番目
+        next_waypoint = global_path.poses[goal_number]; // goal_number番目の位置
+    }
     have_recieved_path = true;
 }
 void NextWaypointCreator::current_pose_callback(const geometry_msgs::PoseStamped::ConstPtr& msg)

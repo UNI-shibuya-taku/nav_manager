@@ -91,16 +91,25 @@ void SimpleLocalmapCreator::cloud_callback(const sensor_msgs::PointCloud2ConstPt
                        index_y <= y+expand_radius_grid) {
                         localmap_expand.data[index] = 100;
                     }
-
                 }
             }
         }
+
+        // 点がそもそも取得できない中で後方90度を埋める
         else{
+            int index = y*grid_width_ + x;
+            int index_x = index % (int)grid_width_;
+            int index_y = index / (int)grid_width_;
+
             // index xyから(x,y)算出→get direction_deg 
-            double back_x = get_x_from_index(i);
-            double back_y = get_y_from_index(i);
+            // double x_i = get_x_index_from_index(i) - grid_width_2_;
+            // double y_i = get_y_index_from_index(i) - grid_width_2_;
+
+            double back_x = get_x_from_index(index_x);
+            double back_y = get_y_from_index(index_y);
+
             const double direction_deg = atan2(back_y, back_x) * (180/M_PI); // -pi~pi
-            // std::cout << "pts_direction: " << direction_deg << std::endl;
+            std::cout << "pts_direction: " << direction_deg << std::endl;
             if(direction_deg > 135.0 || direction_deg < -135.0){
                 localmap.data[i] = 100;
             }

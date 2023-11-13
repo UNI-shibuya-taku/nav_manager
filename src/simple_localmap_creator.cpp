@@ -67,7 +67,7 @@ void SimpleLocalmapCreator::cloud_callback(const sensor_msgs::PointCloud2ConstPt
             continue;
         }
         const int index = get_index_from_xy(p.x, p.y);
-        if(0 <= index && index < grid_size_){
+        if(0 <= index && index < grid_size_ && pt.x > 0.0){
             localmap.data[index] = 100;
         }
     }

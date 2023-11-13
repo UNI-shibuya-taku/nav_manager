@@ -102,16 +102,15 @@ void SimpleLocalmapCreator::cloud_callback(const sensor_msgs::PointCloud2ConstPt
             int index_y = index / (int)grid_width_;
 
             // index xyから(x,y)算出→get direction_deg 
-            // double x_i = get_x_index_from_index(i) - grid_width_2_;
-            // double y_i = get_y_index_from_index(i) - grid_width_2_;
-
-            double back_x = get_x_from_index(index_x);
-            double back_y = get_y_from_index(index_y);
+            double back_x = get_x_from_index(index);
+            double back_y = get_y_from_index(index);
 
             const double direction_deg = atan2(back_y, back_x) * (180/M_PI); // -pi~pi
             std::cout << "pts_direction: " << direction_deg << std::endl;
-            // if(direction_deg > 135.0 || direction_deg < -135.0){
+            if(index >= 0 && index < grid_size_){
                 localmap.data[index] = 100;
+            }
+            // if(direction_deg > 135.0 || direction_deg < -135.0){
             // }
         }
     }

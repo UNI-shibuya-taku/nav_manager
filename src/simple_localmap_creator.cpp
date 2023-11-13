@@ -66,9 +66,12 @@ void SimpleLocalmapCreator::cloud_callback(const sensor_msgs::PointCloud2ConstPt
         if(p.z < min_height_ || max_height_ < p.z){
             continue;
         }
-        const int index = get_index_from_xy(p.x, p.y);
         const double direction_deg = atan2(p.y, p.x) * (180/M_PI); // -pi~pi
         std::cout << "pts_direction: " << direction_deg << std::endl;
+        if(direction_deg > 135.0 || direction_deg < -135.0){
+            localmap.data[index] = 100;
+        }
+        const int index = get_index_from_xy(p.x, p.y);
         if(0 <= index && index < grid_size_){
             localmap.data[index] = 100;
         }

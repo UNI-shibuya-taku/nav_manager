@@ -108,7 +108,7 @@ void SimpleLocalmapCreator::cloud_callback(const sensor_msgs::PointCloud2ConstPt
             double back_x = get_x_from_index(index_x);
             double back_y = get_y_from_index(index_y);
 
-            const double direction_deg = atan2(y, x) * (180/M_PI); // -pi~pi
+            const double direction_deg = atan2(back_y, back_x) * (180/M_PI); // -pi~pi
             std::cout << "pts_direction: " << direction_deg << std::endl;
             if(direction_deg > 135.0 || direction_deg < -135.0){
                 localmap.data[i] = 100;

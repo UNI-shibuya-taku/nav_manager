@@ -1,0 +1,9 @@
+<launch>
+    <!-- change your file path -->
+    <arg name="file_name" value="/home/ubuntu/Downloads/0.15_map_all.pcd"/>
+    <!-- rate : if publish at 10 Hz, set 0.1 -->
+    <arg name="rate" value="0.1"/>
+    <node pkg="pcl_ros" type="pcd_to_pointcloud" name="pcd_to_pointcloud" args="$(arg file_name) $(arg rate)" output="screen">
+        <param name="frame_id" value="map" />
+    </node>
+</launch>

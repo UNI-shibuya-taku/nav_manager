@@ -109,7 +109,7 @@ void SimpleLocalmapCreator::cloud_callback(const sensor_msgs::PointCloud2ConstPt
 
             // std::cout << "pts_direction: " << direction_deg << std::endl;
             // if(index >= 0 && index < grid_size_ && direction_deg > 135.0 && direction_deg < -135.0){
-            if(index >= 0 && index < grid_size_ && ){
+            if(index >= 0 && index < grid_size_){
                 localmap_expand.data[index] = 100;
             }
         }

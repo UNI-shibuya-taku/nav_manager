@@ -97,8 +97,8 @@ void SimpleLocalmapCreator::cloud_callback(const sensor_msgs::PointCloud2ConstPt
 
         // 点がそもそも取得できない中で後方90度を埋める
         else{
-            int index = y*grid_width_ + x;
-            else if(x < 0 && y > 50){
+            int index = get_index_from_xy(x,y);
+            if(x < 0 && y > 50){
                 localmap_expand.data[index] = 100;
             }
             // int index = y*grid_width_ + x;

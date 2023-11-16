@@ -96,6 +96,8 @@ void SimpleLocalmapCreator::cloud_callback(const sensor_msgs::PointCloud2ConstPt
         }
 
         // 点がそもそも取得できない中で後方90度を埋める
+        // 後方部分のindexの特定方法どうするか
+        // パラメータ調整で特定するしかないか。。。
         else{
             int index = get_index_from_xy(x,y);
             if(x < 0 && y > 50){

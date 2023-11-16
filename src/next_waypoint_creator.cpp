@@ -4,7 +4,7 @@ NextWaypointCreator::NextWaypointCreator():private_nh("~")
 {
     //parameter
     private_nh.param("hz",hz,{10});
-    private_nh.param("border_distance",border_distance,{2.0});
+    private_nh.param("border_distance",border_distance,{1.5});
     //subscriber
     sub_global_path = nh.subscribe("/global_path/path",10,&NextWaypointCreator::global_path_callback, this);
     sub_current_pose = nh.subscribe("/ekf_pose",10,&NextWaypointCreator::current_pose_callback, this);
@@ -14,7 +14,7 @@ NextWaypointCreator::NextWaypointCreator():private_nh("~")
     //publisher
     pub_next_waypoint = nh.advertise<geometry_msgs::PoseStamped>("/next_waypoint",1);
 
-    load_task();
+    // load_task(); // 一旦退散
 }
 
 void NextWaypointCreator::route_id_callback(const visualization_msgs::MarkerArray::ConstPtr& msg)

@@ -98,21 +98,25 @@ void SimpleLocalmapCreator::cloud_callback(const sensor_msgs::PointCloud2ConstPt
         // 点がそもそも取得できない中で後方90度を埋める
         else{
             int index = y*grid_width_ + x;
-            int index_x = index % (int)grid_width_;
-            int index_y = index / (int)grid_width_;
+            else if(x < 0 && y > 50){
+                localmap_expand.data[index] = 100;
+            }
+            // int index = y*grid_width_ + x;
+            // int index_x = index % (int)grid_width_;
+            // int index_y = index / (int)grid_width_;
 
             // // index xyから(x,y)算出→get direction_deg 
-            double back_x = get_x_from_index(index);
-            double back_y = get_y_from_index(index);
-            std::cout << "beck_x: " << back_x << " back_y: " << back_y << std::endl;
+            // double back_x = get_x_from_index(index);
+            // double back_y = get_y_from_index(index);
+            // std::cout << "beck_x: " << back_x << " back_y: " << back_y << std::endl;
 
             // const double direction_deg = atan2(back_y, back_x) * (180/M_PI); // -pi~pi
 
             // std::cout << "pts_direction: " << direction_deg << std::endl;
             // if(index >= 0 && index < grid_size_ && direction_deg > 135.0 && direction_deg < -135.0){
-            if(index >= 0 && index < grid_size_){
-                localmap_expand.data[index] = 100;
-            }
+            // if(index >= 0 && index < grid_size_){
+            //     localmap_expand.data[index] = 100;
+            // }
         }
     }
     localmap_expand_pub_.publish(localmap_expand);

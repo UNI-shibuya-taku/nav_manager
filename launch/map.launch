@@ -4,7 +4,7 @@
     <node pkg="pcl_ros" type="pcd_to_pointcloud" name="pcd_to_pointcloud" output="screen">
         <param name="file_name" value="/home/ubuntu/Downloads/test_trans.pcd" />
         <param name="frame_id" value="map" />
-        <param name="interval" value="3" />
+        <param name="interval" value="10" />
     </node>
 
     <node pkg="rviz" type="rviz_map" name="rviz_map" args="-d $(find nav_manager)/config/map.rviz" />

@@ -8,5 +8,5 @@
         <param name="interval" value="5" />
     </node>
 
-    <node pkg="rviz" type="rviz" name="rviz_map" args="-d $(find nav_manager)/config/map.rviz" />
+    <!-- <node pkg="rviz" type="rviz" name="rviz_map" args="-d $(find nav_manager)/config/map.rviz" /> -->
 </launch>

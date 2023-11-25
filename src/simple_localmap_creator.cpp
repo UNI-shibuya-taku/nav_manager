@@ -40,6 +40,7 @@ void SimpleLocalmapCreator::cloud_callback(const sensor_msgs::PointCloud2ConstPt
     // initialize localmap
     nav_msgs::OccupancyGrid localmap;
     localmap.header = msg->header;
+    localmap.header.frame_id = "base_link";
     localmap.info.height = grid_width_;
     localmap.info.width = grid_width_;
     localmap.info.resolution = resolution_;

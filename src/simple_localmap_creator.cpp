@@ -89,7 +89,7 @@ void SimpleLocalmapCreator::cloud_callback(const sensor_msgs::PointCloud2ConstPt
     vg.filter(*cloud_ptr);
 
     // set cost
-    const double range_squared = range_ * range_;
+    // const double range_squared = range_ * range_;
     for(const auto& p : cloud_ptr->points){
         const double distance_squared = p.x * p.x + p.y * p.y;
         if(distance_squared > range_squared){

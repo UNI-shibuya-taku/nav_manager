@@ -54,6 +54,7 @@ void SimpleLocalmapCreator::cloud_callback(const sensor_msgs::PointCloud2ConstPt
     localmap.info.resolution = resolution_;
     localmap.info.origin.position.x = -width_ * 0.5;
     localmap.info.origin.position.y = -width_ * 0.5;
+    localmap.info.origin.position.z = 0.0;
     tf2::Quaternion q;
     q.setRPY(0, 0, 0);
     tf2::convert(q, localmap.info.origin.orientation);

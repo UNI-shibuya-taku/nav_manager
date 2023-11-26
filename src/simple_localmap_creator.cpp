@@ -6,24 +6,8 @@ SimpleLocalmapCreator::SimpleLocalmapCreator(void)
     localmap_pub_ = nh_.advertise<nav_msgs::OccupancyGrid>("local_map", 1);
     localmap_expand_pub_ = nh_.advertise<nav_msgs::OccupancyGrid>("local_map/expand", 1);
     cloud_sub_ = nh_.subscribe("/velodyne_obstacles", 1, &SimpleLocalmapCreator::cloud_callback, this, ros::TransportHints().reliable().tcpNoDelay());
+	ground_sub_ = nh_.subscribe("/velodyne_clear",10,&SimpleLocalmapCreator::ground_callback,this);
 
-	// <arg name="width"  default="20.0"/>
-	// <arg name="resolution"  default="0.1"/>
-	// <arg name="max_height"  default="5.0"/>
-	// <arg name="min_height"  default="0.05"/>
-	// <arg name="expand_radius"  default="0.1"/>
-
-    // double width, resolution, max_height, min_height, expand_radius;
-    // nh_.getParam("width", width);
-    // nh_.getParam("resolution", resolution);
-    // nh_.getParam("max_height", max_height);
-    // nh_.getParam("min_height", min_height);
-    // nh_.getParam("expand_radius", expand_radius);
-
-    // local_nh_.param("width", width_, width);
-    // local_nh_.param("resolution", resolution_, resolution);
-    // local_nh_.param("max_height", max_height_, max_height);
-    // local_nh_.param("min_height", min_height_, min_height);
     local_nh_.param("width", width_, 20.0);
     local_nh_.param("resolution", resolution_, 0.1);
     local_nh_.param("max_height", max_height_, 5.0);
@@ -49,6 +33,11 @@ void SimpleLocalmapCreator::process(void)
 {
     ros::spin();
 }
+void SimpleLocalmapCreator::ground_callback(const sensor_msgs::PointCloud2ConstPtr& msg)
+{
+    // PointCloudTypePtr ground_ptr(new PointCloudType);
+    pcl::fromROSMsg(*msg, *ground_ptr);
+}
 
 void SimpleLocalmapCreator::cloud_callback(const sensor_msgs::PointCloud2ConstPtr& msg)
 {
@@ -68,6 +57,30 @@ void SimpleLocalmapCreator::cloud_callback(const sensor_msgs::PointCloud2ConstPt
     q.setRPY(0, 0, 0);
     tf2::convert(q, localmap.info.origin.orientation);
     localmap.data.resize(grid_size_, 0);
+
+    // ground_ptrがある場所をlocal_map黒く
+    const double range_squared = range_ * range_;
+    for(const auto& p : ground_ptr->points){
+        const double distance_squared = p.x * p.x + p.y * p.y;
+        if(distance_squared > range_squared){
+            continue;
+        }
+        if(p.z < min_height_ || max_height_ < p.z){
+            continue;
+        }
+        const int index = get_index_from_xy(p.x, p.y);
+        if(0 <= index && index < grid_size_){
+            localmap.data[index] = 100;
+        }
+    }
+    // ↑の処理で黒白を反転させる
+    for(int i = 0; i < grid_size_; i ++){
+        if(loaclmap.data[i] == 100){
+            localmap.data[i] = 0;
+        }else if(localmap.data[i] == 0){
+            localmap.data[i] = 100;
+        }
+    }
 
     // downsampling
     pcl::VoxelGrid<PointType> vg;
@@ -139,6 +152,7 @@ void SimpleLocalmapCreator::cloud_callback(const sensor_msgs::PointCloud2ConstPt
         }
     }
     localmap_expand_pub_.publish(localmap_expand);
+    ground_ptr->clear();
 }
 
 int SimpleLocalmapCreator::get_index_from_xy(const double x, const double y)

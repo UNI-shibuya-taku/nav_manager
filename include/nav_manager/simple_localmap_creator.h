@@ -22,6 +22,7 @@ public:
     SimpleLocalmapCreator(void);
     void process(void);
     void cloud_callback(const sensor_msgs::PointCloud2ConstPtr& msg);
+    void ground_callback(const sensor_msgs::PointCloud2ConstPtr& msg);
     int get_index_from_xy(const double x, const double y);
     int get_x_index_from_index(const int index);
     int get_y_index_from_index(const int index);
@@ -44,6 +45,7 @@ protected:
     double range_;
     double grid_size_;
     double expand_radius_;
+    PointCloudTypePtr ground_ptr{new PointCloudType};
 };
 }
 #endif// __SIMPLE_LOCALMAP_CREATOR_H

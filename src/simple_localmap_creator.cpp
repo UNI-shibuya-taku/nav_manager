@@ -75,7 +75,7 @@ void SimpleLocalmapCreator::cloud_callback(const sensor_msgs::PointCloud2ConstPt
     }
     // ↑の処理で黒白を反転させる
     for(int i = 0; i < grid_size_; i ++){
-        if(loaclmap.data[i] == 100){
+        if(localmap.data[i] == 100){
             localmap.data[i] = 0;
         }else if(localmap.data[i] == 0){
             localmap.data[i] = 100;

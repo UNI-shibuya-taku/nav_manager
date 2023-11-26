@@ -34,6 +34,7 @@ protected:
     ros::NodeHandle nh_;
     ros::NodeHandle local_nh_;
     ros::Subscriber cloud_sub_;
+    ros::Subscriber ground_sub_;
     ros::Publisher localmap_pub_;
     ros::Publisher localmap_expand_pub_;
     double width_;

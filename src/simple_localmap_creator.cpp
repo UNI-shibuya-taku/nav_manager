@@ -48,7 +48,7 @@ void SimpleLocalmapCreator::cloud_callback(const sensor_msgs::PointCloud2ConstPt
     // initialize localmap
     nav_msgs::OccupancyGrid localmap;
     localmap.header = msg->header;
-    localmap.header.frame_id = "base_link";
+    localmap.header.frame_id = "Pandar";
     localmap.info.height = grid_width_;
     localmap.info.width = grid_width_;
     localmap.info.resolution = resolution_;
@@ -61,25 +61,25 @@ void SimpleLocalmapCreator::cloud_callback(const sensor_msgs::PointCloud2ConstPt
 
     // ground_ptrがある場所をlocal_map黒く
     const double range_squared = range_ * range_;
-    for(const auto& p : ground_ptr->points){
-        const double distance_squared = p.x * p.x + p.y * p.y;
-        if(distance_squared > range_squared){
-            continue;
-        }
-        const int index = get_index_from_xy(p.x, p.y);
-        if(0 <= index && index < grid_size_){
-            localmap.data[index] = 100;
-        }
-    }
-    // ↑の処理で黒白を反転させる
-    for(int i = 0; i < grid_size_; i ++){
-        if(localmap.data[i] == 100){
-            localmap.data[i] = 0;
-        }else if(localmap.data[i] == 0){
-            localmap.data[i] = 100;
-        }
-    }
-    test_localmap_pub_.publish(localmap);
+    // for(const auto& p : ground_ptr->points){
+    //     const double distance_squared = p.x * p.x + p.y * p.y;
+    //     if(distance_squared > range_squared){
+    //         continue;
+    //     }
+    //     const int index = get_index_from_xy(p.x, p.y);
+    //     if(0 <= index && index < grid_size_){
+    //         localmap.data[index] = 100;
+    //     }
+    // }
+    // // ↑の処理で黒白を反転させる
+    // for(int i = 0; i < grid_size_; i ++){
+    //     if(localmap.data[i] == 100){
+    //         localmap.data[i] = 0;
+    //     }else if(localmap.data[i] == 0){
+    //         localmap.data[i] = 100;
+    //     }
+    // }
+    // test_localmap_pub_.publish(localmap);
 
     // downsampling
     pcl::VoxelGrid<PointType> vg;
@@ -127,11 +127,11 @@ void SimpleLocalmapCreator::cloud_callback(const sensor_msgs::PointCloud2ConstPt
         }
 
         // 点がそもそも取得できない中で後方90度を埋める
-        else{
-            int index = get_index_from_xy(x,y);
-            if(x < 0 && y > 50){
-                localmap_expand.data[index] = 100;
-            }
+        // else{
+        //     int index = get_index_from_xy(x,y);
+        //     if(x < 0 && y > 50){
+        //         localmap_expand.data[index] = 100;
+        //     }
             // int index = y*grid_width_ + x;
             // int index_x = index % (int)grid_width_;
             // int index_y = index / (int)grid_width_;
@@ -148,7 +148,7 @@ void SimpleLocalmapCreator::cloud_callback(const sensor_msgs::PointCloud2ConstPt
             // if(index >= 0 && index < grid_size_){
             //     localmap_expand.data[index] = 100;
             // }
-        }
+        // }
     }
     localmap_expand_pub_.publish(localmap_expand);
     ground_ptr->clear();

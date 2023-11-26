@@ -36,6 +36,7 @@ protected:
     ros::Subscriber cloud_sub_;
     ros::Subscriber ground_sub_;
     ros::Publisher localmap_pub_;
+    ros::Publisher test_localmap_pub_;
     ros::Publisher localmap_expand_pub_;
     double width_;
     double max_height_;

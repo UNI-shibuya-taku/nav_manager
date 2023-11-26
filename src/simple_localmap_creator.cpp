@@ -4,6 +4,7 @@ namespace localmap_creator{
 SimpleLocalmapCreator::SimpleLocalmapCreator(void)
 : local_nh_("~"){
     localmap_pub_ = nh_.advertise<nav_msgs::OccupancyGrid>("local_map", 1);
+    test_localmap_pub_ = nh_.advertise<nav_msgs::OccupancyGrid>("local_map/test", 1);
     localmap_expand_pub_ = nh_.advertise<nav_msgs::OccupancyGrid>("local_map/expand", 1);
     cloud_sub_ = nh_.subscribe("/velodyne_obstacles", 1, &SimpleLocalmapCreator::cloud_callback, this, ros::TransportHints().reliable().tcpNoDelay());
 	ground_sub_ = nh_.subscribe("/velodyne_clear",10,&SimpleLocalmapCreator::ground_callback,this);
@@ -65,9 +66,6 @@ void SimpleLocalmapCreator::cloud_callback(const sensor_msgs::PointCloud2ConstPt
         if(distance_squared > range_squared){
             continue;
         }
-        if(p.z < min_height_ || max_height_ < p.z){
-            continue;
-        }
         const int index = get_index_from_xy(p.x, p.y);
         if(0 <= index && index < grid_size_){
             localmap.data[index] = 100;
@@ -81,6 +79,7 @@ void SimpleLocalmapCreator::cloud_callback(const sensor_msgs::PointCloud2ConstPt
             localmap.data[i] = 100;
         }
     }
+    test_localmap_pub_.publish(localmap);
 
     // downsampling
     pcl::VoxelGrid<PointType> vg;

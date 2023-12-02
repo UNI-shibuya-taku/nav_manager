@@ -5,7 +5,8 @@
         <!-- <param name="file_name" value="/home/musashikosugi/Downloads/0.15_map_all.pcd" /> -->
         <!-- <param name="file_name" value="/home/ubuntu/Downloads/test_trans.pcd" /> -->
         <!-- <param name="file_name" value="/home/ubuntu/Downloads/Tsukuba3D_TC2003CDJM-CUB_LOD3_mesh2pcd.pcd" /> -->
-        <param name="file_name" value="/home/ubuntu/Downloads/tsukuba_extra_final.pcd" />
+        <!-- <param name="file_name" value="/home/ubuntu/Downloads/tsukuba_extra_final.pcd" /> -->
+        <param name="file_name" value="/home/ubuntu/Downloads/tsukuba_extra_final_merge.pcd" />
         <param name="frame_id" value="map" />
         <param name="interval" value="5" />
     </node>
